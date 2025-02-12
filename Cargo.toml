@@ -1,0 +1,13 @@
+[package]
+name = "skb-traits"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# Macros for adding custom socket options became public only recently
+# https://github.com/nix-rust/nix/issues/577
+nix = { git = "https://github.com/nix-rust/nix", features = ["net", "socket"] }
+
+[dev-dependencies]
+libbpf-rs = "0.24.8"
+
