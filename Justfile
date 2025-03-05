@@ -16,6 +16,6 @@ build:
     make -C tests/bpf set_trait.bpf.o
     cargo test --no-run
 
-test:
+test TEST='':
     tests/setup-lo.sh || true
-    {{ test_prog }} --color=always --test-threads=1
+    {{ test_prog }} --color=always --test-threads=1 {{ TEST }}
