@@ -379,7 +379,7 @@ pub fn can_construct_pkt_trait() -> TestResult {
     let _t = PktTrait {
         key: 42,
         len: 2,
-        val: 0xcfcf,
+        val: [0xcfcf, 0],
         .. Default::default()
     };
 

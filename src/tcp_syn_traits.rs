@@ -22,7 +22,7 @@ pub struct PktTrait {
     pub len: u8,
     pub io_err: u8,
     pub _zpad_2: u32,
-    pub val: u64,
+    pub val: [u64; 2],
 }
 
 impl From<TraitKey> for PktTrait {
@@ -38,7 +38,7 @@ impl From<(TraitKey, u16)> for PktTrait {
     fn from(pair: (TraitKey, u16)) -> Self {
         PktTrait {
             key: pair.0,
-            val: pair.1.into(),
+            val: [pair.1.into(), 0],
             len: bits_to_bytes!(u16::BITS) as _,
             .. Default::default()
         }
@@ -49,7 +49,7 @@ impl From<(TraitKey, u32)> for PktTrait {
     fn from(pair: (TraitKey, u32)) -> Self {
         PktTrait {
             key: pair.0,
-            val: pair.1.into(),
+            val: [pair.1.into(), 0],
             len: bits_to_bytes!(u32::BITS) as _,
             .. Default::default()
         }
@@ -60,7 +60,7 @@ impl From<(TraitKey, u64)> for PktTrait {
     fn from(pair: (TraitKey, u64)) -> Self {
         PktTrait {
             key: pair.0,
-            val: pair.1,
+            val: [pair.1, 0],
             len: bits_to_bytes!(u64::BITS) as _,
             .. Default::default()
         }
