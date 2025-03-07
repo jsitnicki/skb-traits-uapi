@@ -1,7 +1,7 @@
 set shell := ["bash", "-uc"]
 
 # Find freshest executable
-test_prog := `find target/debug/deps/ -executable -name 'run-*' | xargs ls -1t | head -1`
+test_prog := `find target/debug/deps/ -executable -name 'test_pkt_traits-*' | xargs ls -1t | head -1`
 
 alias b := build
 alias t := test
