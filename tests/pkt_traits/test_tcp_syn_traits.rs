@@ -1,7 +1,7 @@
 use nix::errno::Errno;
 use nix::sys::socket::{
-    connect, getsockopt, setsockopt, socket, sockopt, AddressFamily, SockFlag, SockProtocol,
-    SockType, SockaddrStorage,
+    getsockopt, setsockopt, socket, sockopt, AddressFamily, SockFlag, SockProtocol, SockType,
+    SockaddrStorage,
 };
 use nix::{libc, setsockopt_impl};
 use std::mem;
@@ -256,7 +256,7 @@ pub fn can_send_and_recv_u16_trait() -> TestResult {
     let c = tcp_socket_v4()?;
     let t = [(42, 0xaaaa_u16).into()];
     setsockopt(&c, TcpSynTraitsSet::default(), &t)?;
-    connect(c.as_raw_fd(), &SockaddrStorage::from(ln.local_addr()?))?;
+    connect(&c, &SockaddrStorage::from(ln.local_addr()?))?;
 
     let (p, _) = ln.accept()?;
     assert_eq!(
@@ -275,7 +275,7 @@ pub fn can_send_and_recv_u32_trait() -> TestResult {
     let c = tcp_socket_v4()?;
     let t = [(42, 0xaaaa_bbbb_u32).into()];
     setsockopt(&c, TcpSynTraitsSet::default(), &t)?;
-    connect(c.as_raw_fd(), &SockaddrStorage::from(ln.local_addr()?))?;
+    connect(&c, &SockaddrStorage::from(ln.local_addr()?))?;
 
     let (p, _) = ln.accept()?;
     assert_eq!(
@@ -294,7 +294,7 @@ pub fn can_send_and_recv_u64_trait() -> TestResult {
     let c = tcp_socket_v4()?;
     let t = [(42, 0xaaaa_bbbb_cccc_dddd_u64).into()];
     setsockopt(&c, TcpSynTraitsSet::default(), &t)?;
-    connect(c.as_raw_fd(), &SockaddrStorage::from(ln.local_addr()?))?;
+    connect(&c, &SockaddrStorage::from(ln.local_addr()?))?;
 
     let (p, _) = ln.accept()?;
     assert_eq!(
@@ -317,7 +317,7 @@ pub fn can_send_and_recv_many_traits() -> TestResult {
         (0xc, 0xcccc_cccc_cccc_cccc_u64).into(),
     ];
     setsockopt(&c, TcpSynTraitsSet::default(), &t)?;
-    connect(c.as_raw_fd(), &SockaddrStorage::from(ln.local_addr()?))?;
+    connect(&c, &SockaddrStorage::from(ln.local_addr()?))?;
 
     let (p, _) = ln.accept()?;
     assert_eq!(
@@ -380,7 +380,7 @@ pub fn can_construct_pkt_trait() -> TestResult {
         key: 42,
         len: 2,
         val: [0xcfcf, 0],
-        .. Default::default()
+        ..Default::default()
     };
 
     Ok(())

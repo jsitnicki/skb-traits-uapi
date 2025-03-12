@@ -1,5 +1,7 @@
 use libbpf_rs::{Object, ObjectBuilder, Program};
+use nix::sys::socket::SockaddrLike;
 use std::error::Error;
+use std::os::fd::AsRawFd;
 
 pub(crate) type TestResult = Result<(), Box<dyn Error>>;
 
@@ -25,4 +27,8 @@ impl GetProg for Object {
             .find(|prog| prog.name() == name)
             .ok_or(Box::<dyn Error>::from("program '{name}' missing"))
     }
+}
+
+pub(crate) fn connect<F: AsRawFd, A: SockaddrLike>(fd: &F, addr: &A) -> nix::Result<()> {
+    nix::sys::socket::connect(fd.as_raw_fd(), addr)
 }
